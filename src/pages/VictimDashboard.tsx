@@ -30,8 +30,8 @@ const VictimDashboard: React.FC = () => {
         <section className="dashboard-section">
           <h2 className="section-title">Quick Actions</h2>
           <div className="action-buttons">
-            <Button variant="primary" size="large" onClick={() => window.open('tel:1800-HELP-NOW')}>
-              🆘 Get Help Now
+            <Button variant="primary" size="large" onClick={() => window.open('tel:1091')}>
+              🆘 Get Help Now (1091)
             </Button>
             <Button variant="secondary" size="large" onClick={() => setChatOpen(true)}>
               💬 Chat with Counsellor

@@ -1,56 +1,65 @@
 import { User, UserRole } from '../types';
 import { getUsers, setCurrentUser, getCurrentUser } from './storage';
+import api from './api';
 
-export const registerUser = (name: string, email: string, password: string, role: UserRole): { success: boolean; message: string } => {
-  const users = getUsers();
-  
-  // Check for duplicate email
-  if (users.some(u => u.email === email)) {
-    return { success: false, message: 'Email already registered' };
+export const registerUser = async (name: string, email: string, password: string, role: UserRole): Promise<{ success: boolean; message: string }> => {
+  try {
+    // Validate password
+    if (password.length < 6) {
+      return { success: false, message: 'Password must be at least 6 characters' };
+    }
+
+    const response = await api.post('/auth/register', { name, email, password, role });
+    
+    if (response.data.success) {
+      return { success: true, message: 'Registration successful' };
+    }
+    
+    return { success: false, message: response.data.message || 'Registration failed' };
+  } catch (error: any) {
+    return { 
+      success: false, 
+      message: error.response?.data?.message || 'Registration failed. Please try again.' 
+    };
   }
-
-  // Validate password
-  if (password.length < 6) {
-    return { success: false, message: 'Password must be at least 6 characters' };
-  }
-
-  // Create new user
-  const newUser: User = {
-    id: `user-${Date.now()}`,
-    name,
-    email,
-    password, // In production, hash this
-    role,
-    createdAt: new Date().toISOString(),
-  };
-
-  users.push(newUser);
-  localStorage.setItem('dv_app_users', JSON.stringify(users));
-
-  return { success: true, message: 'Registration successful' };
 };
 
-export const loginUser = (email: string, password: string): { success: boolean; message: string; user?: User } => {
-  const users = getUsers();
-  const user = users.find(u => u.email === email);
-
-  if (!user) {
-    return { success: false, message: 'User not found' };
+export const loginUser = async (email: string, password: string): Promise<{ success: boolean; message: string; user?: User; token?: string }> => {
+  try {
+    const response = await api.post('/auth/login', { email, password });
+    
+    if (response.data.success) {
+      const { token, user } = response.data;
+      
+      // Store token
+      localStorage.setItem('auth_token', token);
+      
+      // Store user in session
+      const userData: User = {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        password: '', // Don't store password
+        role: user.role,
+        createdAt: new Date().toISOString(),
+      };
+      
+      setCurrentUser(userData);
+      
+      return { success: true, message: 'Login successful', user: userData, token };
+    }
+    
+    return { success: false, message: response.data.message || 'Login failed' };
+  } catch (error: any) {
+    return { 
+      success: false, 
+      message: error.response?.data?.message || 'Login failed. Please check your credentials.' 
+    };
   }
-
-  if (user.password !== password) {
-    return { success: false, message: 'Incorrect password' };
-  }
-
-  if (!user.role) {
-    return { success: false, message: 'Account role not assigned' };
-  }
-
-  setCurrentUser(user);
-  return { success: true, message: 'Login successful', user };
 };
 
 export const logoutUser = (): void => {
+  localStorage.removeItem('auth_token');
   setCurrentUser(null);
 };
 

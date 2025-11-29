@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// Mock API base URL (you can replace this with your actual API)
-const API_BASE_URL = 'https://mockapi.io/api/v1'; // Replace with your actual API
+// Backend API base URL
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -15,10 +15,9 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     // Add auth token if available
-    const user = sessionStorage.getItem('dv_app_current_user');
-    if (user) {
-      const userData = JSON.parse(user);
-      config.headers.Authorization = `Bearer ${userData.id}`;
+    const token = localStorage.getItem('auth_token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
@@ -66,43 +65,62 @@ const retryRequest = async (fn: () => Promise<any>, retries = 3): Promise<any> =
   }
 };
 
-// Example API functions (using mock data from localStorage for now)
+// API functions
 export const fetchLegalRights = async () => {
   try {
-    // In a real app, this would be: return await api.get('/legal-rights');
-    // For now, we'll use localStorage data
-    const data = localStorage.getItem('dv_app_legal_rights');
-    return { data: data ? JSON.parse(data) : [] };
+    const response = await api.get('/legal-rights');
+    return response;
   } catch (error: any) {
-    throw new Error(error.message || 'Failed to fetch legal rights');
+    throw new Error(error.response?.data?.message || 'Failed to fetch legal rights');
   }
 };
 
 export const fetchSupportServices = async () => {
   try {
-    // In a real app, this would be: return await api.get('/support-services');
-    const data = localStorage.getItem('dv_app_support_services');
-    return { data: data ? JSON.parse(data) : [] };
+    const response = await api.get('/support-services');
+    return response;
   } catch (error: any) {
-    throw new Error(error.message || 'Failed to fetch support services');
+    throw new Error(error.response?.data?.message || 'Failed to fetch support services');
   }
 };
 
 export const submitCaseNote = async (note: any) => {
   try {
-    // In a real app, this would be: return await api.post('/case-notes', note);
-    return { data: note, status: 201 };
+    const response = await api.post('/case-notes', note);
+    return response;
   } catch (error: any) {
-    throw new Error(error.message || 'Failed to submit case note');
+    throw new Error(error.response?.data?.message || 'Failed to submit case note');
+  }
+};
+
+export const updateCaseNote = async (id: string, note: any) => {
+  try {
+    const response = await api.put(`/case-notes/${id}`, note);
+    return response;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || 'Failed to update case note');
+  }
+};
+
+export const deleteCaseNote = async (id: string) => {
+  try {
+    const response = await api.delete(`/case-notes/${id}`);
+    return response;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || 'Failed to delete case note');
   }
 };
 
 export const uploadDocument = async (file: File) => {
   try {
-    // In a real app, this would be: return await api.post('/documents', formData);
-    return { data: { id: `doc-${Date.now()}`, filename: file.name }, status: 201 };
+    const formData = new FormData();
+    formData.append('file', file);
+    const response = await api.post('/documents', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response;
   } catch (error: any) {
-    throw new Error(error.message || 'Failed to upload document');
+    throw new Error(error.response?.data?.message || 'Failed to upload document');
   }
 };
 

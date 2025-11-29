@@ -196,10 +196,13 @@ const LegalDashboard: React.FC = () => {
               <label>Category</label>
               <select {...register('category')} className={errors.category ? 'input-error' : ''}>
                 <option value="">Select category</option>
-                <option value="Protection">Protection</option>
-                <option value="Privacy">Privacy</option>
-                <option value="Legal Process">Legal Process</option>
-                <option value="Rights">Rights</option>
+                <option value="Legal Protection">Legal Protection</option>
+                <option value="Legal Rights">Legal Rights</option>
+                <option value="Financial Rights">Financial Rights</option>
+                <option value="Privacy Rights">Privacy Rights</option>
+                <option value="Legal Aid">Legal Aid</option>
+                <option value="Domestic Violence Act">Domestic Violence Act</option>
+                <option value="Criminal Law">Criminal Law</option>
               </select>
               {errors.category && <span className="error-message">{errors.category.message}</span>}
             </div>

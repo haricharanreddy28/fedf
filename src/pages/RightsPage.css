@@ -96,3 +96,26 @@
   font-size: 20px;
 }
 
+.rights-info li strong {
+  color: var(--primary-purple);
+  font-weight: 600;
+}
+
+.legal-note {
+  margin-top: 24px;
+  padding: 16px;
+  background: var(--light-bg);
+  border-radius: 8px;
+  border-left: 4px solid var(--primary-purple);
+}
+
+.legal-note p {
+  margin: 0;
+  line-height: 1.8;
+  color: var(--text-dark);
+}
+
+.legal-note strong {
+  color: var(--primary-purple);
+}
+

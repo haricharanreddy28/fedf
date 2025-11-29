@@ -404,8 +404,11 @@ const AdminDashboard: React.FC = () => {
               <select {...registerService('category')} className={serviceErrors.category ? 'input-error' : ''}>
                 <option value="">Select category</option>
                 <option value="Emergency">Emergency</option>
+                <option value="Legal Support">Legal Support</option>
+                <option value="Legal Aid">Legal Aid</option>
+                <option value="Support Services">Support Services</option>
+                <option value="Child Support">Child Support</option>
                 <option value="Counseling">Counseling</option>
-                <option value="Legal">Legal</option>
                 <option value="Shelter">Shelter</option>
                 <option value="Medical">Medical</option>
               </select>

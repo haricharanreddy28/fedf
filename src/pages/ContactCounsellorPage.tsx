@@ -136,7 +136,7 @@ const ContactCounsellorPage: React.FC = () => {
               <li>Respectful and non-judgmental assistance</li>
             </ul>
             <div className="emergency-note">
-              <strong>If this is an emergency, please call 911 or the emergency helpline immediately.</strong>
+              <strong>If this is an emergency, please call 100 (Police) or 1091 (Women Helpline) immediately.</strong>
             </div>
           </Card>
         </div>

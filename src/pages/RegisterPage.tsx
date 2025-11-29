@@ -48,7 +48,7 @@ const RegisterPage: React.FC = () => {
     setError('');
 
     try {
-      const result = registerUser(data.name, data.email, data.password, data.role);
+      const result = await registerUser(data.name, data.email, data.password, data.role);
       
       if (result.success) {
         setSuccess(true);

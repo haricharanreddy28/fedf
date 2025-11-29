@@ -37,7 +37,7 @@ const LoginPage: React.FC = () => {
     setError('');
 
     try {
-      const result = loginUser(data.email, data.password);
+      const result = await loginUser(data.email, data.password);
       
       if (result.success && result.user) {
         // Redirect based on role

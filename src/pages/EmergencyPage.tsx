@@ -6,10 +6,12 @@ import './EmergencyPage.css';
 
 const EmergencyPage: React.FC = () => {
   const emergencyNumbers = [
-    { name: 'Emergency Helpline', number: '1800-HELP-NOW', description: '24/7 Crisis Support' },
-    { name: 'Police Emergency', number: '911', description: 'Immediate Police Assistance' },
-    { name: 'National Domestic Violence Hotline', number: '1-800-799-7233', description: '24/7 Support' },
-    { name: 'Crisis Text Line', number: 'Text HOME to 741741', description: 'Text Support' },
+    { name: 'Police Emergency', number: '100', description: 'Immediate Police Assistance' },
+    { name: 'Women Helpline (All India)', number: '1091', description: '24/7 Women Support & Protection' },
+    { name: 'Child Helpline', number: '1098', description: '24/7 Child Protection Services' },
+    { name: 'National Commission for Women', number: '011-23237166', description: 'Women Rights & Legal Support' },
+    { name: 'Domestic Violence Helpline (Delhi)', number: '181', description: 'Delhi Women Helpline' },
+    { name: 'Emergency Medical Services', number: '108', description: 'Ambulance & Medical Emergency' },
   ];
 
   return (
@@ -18,21 +20,21 @@ const EmergencyPage: React.FC = () => {
       <div className="emergency-container">
         <Card className="emergency-hero">
           <h1>🆘 Emergency Help</h1>
-          <p className="emergency-subtitle">If you are in immediate danger, please call 911</p>
+          <p className="emergency-subtitle">If you are in immediate danger, please call 100 (Police) or 1091 (Women Helpline)</p>
           <div className="emergency-buttons">
             <Button
               variant="danger"
               size="large"
-              onClick={() => window.open('tel:911')}
+              onClick={() => window.open('tel:100')}
             >
-              Call 911 Now
+              Call Police (100)
             </Button>
             <Button
               variant="primary"
               size="large"
-              onClick={() => window.open('tel:1800-HELP-NOW')}
+              onClick={() => window.open('tel:1091')}
             >
-              Call Helpline
+              Women Helpline (1091)
             </Button>
           </div>
         </Card>
@@ -66,11 +68,13 @@ const EmergencyPage: React.FC = () => {
           <Card>
             <h2>Safety Tips</h2>
             <ul>
-              <li>If you are in immediate danger, call 911</li>
-              <li>Have a safety plan ready</li>
-              <li>Keep important documents in a safe place</li>
-              <li>Trust your instincts</li>
-              <li>Reach out to trusted friends or family</li>
+              <li>If you are in immediate danger, call 100 (Police) or 1091 (Women Helpline)</li>
+              <li>Have a safety plan ready and keep emergency numbers saved</li>
+              <li>Keep important documents (Aadhaar, PAN, etc.) in a safe place</li>
+              <li>Trust your instincts and seek help immediately</li>
+              <li>Reach out to trusted friends, family, or local women's organizations</li>
+              <li>You can file a complaint under the Protection of Women from Domestic Violence Act, 2005</li>
+              <li>Contact your nearest police station or women's protection cell</li>
             </ul>
           </Card>
         </section>
