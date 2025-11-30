@@ -13,7 +13,8 @@ const DonationPage: React.FC = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
-    const { Razorpay, isLoading, error: razorpayError } = useRazorpay();
+    const { Razorpay, isLoading } = useRazorpay();
+
 
     const handlePayment = async () => {
         if (!name || !email) {
